@@ -40,6 +40,8 @@ As operações e os valores de incremento são fatos. A semântica de jogos/vit�
 - [FATO] `FUN_00476d90` constrói um objeto com coleções em `+0x0c`, `+0x10`, `+0x14`, `+0x84`, `+0x88` e `+0x8c`; `FUN_00477428` lê essas coleções/campos e `FUN_00477950` grava sequências correspondentes.
 - [FATO] O carregador `FUN_00477428` cria em `+0x0c` uma lista de membros via `FUN_004771c4`, em `+0x84` uma lista via `FUN_004772cc`, em `+0x88` uma lista via `FUN_0047737c`, e reconstrói coleções em `+0x8c` e `+0x14` por helpers próprios.
 - [FATO] O escritor `FUN_00477950` grava o comprimento de `+0x10` como short, percorre e grava a lista `+0x0c`, depois percorre `+0x84`, `+0x88` e serializa os objetos de `+0x8c`/`+0x14` por helpers.
+- [FATO] No savegame, `FUN_0046b500` grava duas coleções usando `FUN_00474bb0` nos modos `1` e `0`; `FUN_0046bb20` recria duas coleções correspondentes com `FUN_00474ab8`.
+- [FATO] A presença do mesmo serializador de Team no savegame não demonstra que `teams/*.ilt` use essa sequência. A associação com `.ilt` permanece por confirmar.
 - [FATO] Campos diretos transferidos pelo leitor/escritor de Team:
 
 | Offset | Largura/representação | Evidência |

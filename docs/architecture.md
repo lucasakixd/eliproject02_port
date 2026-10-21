@@ -26,6 +26,9 @@
 - [FATO] `FUN_00404ed8` chama `ReadFile` com `tamanho_do_registro * quantidade` e converte bytes lidos de volta em quantidade de registros.
 - [FATO] `FUN_00404f3c` aplica o mesmo cálculo para `WriteFile`.
 - [HIPÓTESE] Os métodos compõem uma abstração de stream de registros fixos da RTL/Delphi. Não há evidência nesses wrappers de que leiam os arquivos `.ilt`, `.ilg`, `.dat`, `.els` ou `.txe` do jogo.
+- [FATO] `FUN_0046b500` grava um save por stream e serializa, entre outras coleções, duas coleções de objetos Team usando `FUN_00474bb0` com os modos `1` e `0`. `FUN_0046bb20` as reconstrói com `FUN_00474ab8` e os mesmos modos.
+- [FATO] O load/save do jogo também processa várias outras coleções e objetos no mesmo stream; logo, a serialização Team observada nesses call sites integra o estado da partida/carreira, não prova o formato dos arquivos individuais `teams/*.ilt`.
+- [HIPÓTESE] Os modos `1` e `0` diferenciam duas categorias de equipes no save; seus nomes e regras não foram recuperados.
 
 ### Roster e RNG
 
