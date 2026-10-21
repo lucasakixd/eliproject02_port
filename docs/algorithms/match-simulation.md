@@ -30,6 +30,26 @@
 - [HIPÓTESE] Esse fluxo gera gols. O código prova a alteração do placar, mas o nome do evento e a fórmula completa de probabilidade precisam ser confirmados por reconstrução das pilhas x87 em `FUN_00479994`, `FUN_00479944` e `FUN_004798d8`.
 - [FATO] Os códigos numéricos gravados por `FUN_00484bcc` ficam nos registros de evento; os caminhos observados usam `1`/`2` para os dois modos de ação de placar.
 
+### Agregação dos atributos do lado
+
+[FATO] `FUN_00479994` inicializa dois acumuladores em 1, usa shorts dos dois lados em três fases e soma uma razão cumulativa por fase. Chamando os lados de A e B apenas para descrever a operação:
+
+| Fase | Valor somado ao acumulador A | Valor somado ao acumulador B | Peso |
+|---|---|---|---:|
+| 1 | `A+0x72` | `B+0x76` | 1 |
+| 2 | `A+0x74` | `B+0x74` | 2 |
+| 3 | `A+0x76` | `B+0x72 + 3*(B+0x70)` | 1 |
+
+Em cada fase, a contribuição é $w \times A/(A+B+1)$, usando os acumuladores já atualizados; a soma ponderada é acumulada em `float10` pelo x87:
+
+$$
+S = \sum_{k=1}^{3} w_k \frac{A_k}{A_k+B_k+1}, \qquad (w_1,w_2,w_3)=(1,2,1)
+$$
+
+- [FATO] `A` corresponde ao objeto passado pelo slot de pilha `in_stack_00000004-4` de `FUN_00479994`; `B`, ao objeto alcançado pelo slot `in_stack_00000004-0xc`.
+- [FATO] Os shorts consultados estão no bloco Team serializado `+0x68..+0x7b`.
+- [HIPÓTESE] A soma `S` alimenta o cálculo de chance de ação/placar em `FUN_00479ae0`; seu papel exato e o restante da expressão x87 ainda requerem confirmação.
+
 ## Outros eventos observados
 
 Os rótulos abaixo são categorias numéricas do registro, não nomes confirmados de evento.

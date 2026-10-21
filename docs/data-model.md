@@ -50,6 +50,10 @@ As operações e os valores de incremento são fatos. A semântica de jogos/vit�
 | `+0x08` | 2 bytes | Carregado antes do nome; usado como identificador/índice em buscas. |
 | `+0x18` | 0x50 bytes | Bloco de campos transferido em lote. |
 | `+0x68` | 0x14 bytes | Segundo bloco transferido em lote. |
+| `+0x70` | 2 bytes | Lido pela rotina de avaliação da partida. |
+| `+0x72` | 2 bytes | Lido pela rotina de avaliação da partida. |
+| `+0x74` | 2 bytes | Lido pela rotina de avaliação da partida. |
+| `+0x76` | 2 bytes | Lido pela rotina de avaliação da partida. |
 | `+0x7c` | 6 bytes | Bloco transferido em lote. |
 | `+0x90`, `+0x94`, `+0x98`, `+0x9c` | 4 bytes cada | Campos carregados e gravados individualmente. |
 | `+0xa0` | 10 bytes | Bloco transferido. |
@@ -63,6 +67,8 @@ As operações e os valores de incremento são fatos. A semântica de jogos/vit�
 | `+0x108`, `+0x10a` | 2 bytes cada | Campos carregados e gravados individualmente. |
 
 - [FATO] O formato do objeto também inclui comprimentos de coleção de 16 bits e itens dinâmicos, portanto não equivale a despejar em sequência uma struct C de tamanho fixo.
+- [FATO] Os shorts `+0x70`, `+0x72`, `+0x74`, `+0x76` estão dentro do bloco persistido `+0x68..+0x7b`.
+- [HIPÓTESE] Esses quatro shorts codificam atributos setoriais utilizados na avaliação de partida; nomes/ordem (ataque, defesa ou posições) ainda não foram confirmados.
 - [HIPÓTESE] Esse objeto Team corresponde a um registro salvo em `teams/*.ilt`, pois existem 338 arquivos com esses nomes e o construtor contém coleção de membros; a correspondência arquivo-classe ainda não está provada por um call site que abra a extensão `.ilt`.
 - [FATO] Objetos passados a `FUN_0047a674`, `FUN_0047bedc` e `FUN_0047bf4c` expõem uma lista de ponteiros em `+0x0c`; as rotinas percorrem essa lista para agregar valores ou atualizar seus elementos.
 - [FATO] O objeto passado como lado em `FUN_00480ae4` é entregue a helpers que percorrem a coleção de membros em `+0x0c`; ele também possui os offsets `+0x18` a `+0x30` modificados como contadores de classificação e esses offsets pertencem ao bloco serializado em `FUN_00477428`/`FUN_00477950`.
