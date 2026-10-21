@@ -34,7 +34,7 @@ Não foram encontrados arquivos com extensões `.sav`, `.cfg` ou `.ini` nesta c�
 
 | Caminho/padrão | Inventário e tamanhos | Finalidade/relacionamentos |
 |---|---|---|
-| `teams/*.ilt` | [FATO] 338 arquivos, 215.314 bytes no total, 465-753 bytes cada. Exemplos: `Arsenal.ilt` (676), `Ajax.ilt` (677), `Barcelona.ilt` (665). | [HIPÓTESE] Dados individuais de equipes, sugeridos pelos nomes de clubes e pelo diretório. A estrutura dos registros ainda não foi identificada. |
+| `teams/*.ilt` | [FATO] 338 arquivos, 215.314 bytes no total, 465-753 bytes cada. Exemplos: `Arsenal.ilt` (676), `Ajax.ilt` (677), `Barcelona.ilt` (665). | [HIPÓTESE] Dados de equipes: os nomes/diretório e o objeto Team serializado no decompilado são compatíveis, mas ainda não foi localizado o call site que associa diretamente a extensão `.ilt` a esse leitor. O layout dos registros foi parcialmente mapeado em `docs/data-model.md`. |
 | `Games/aaa.ilg` | [FATO] 130.423 bytes, binário. | [HIPÓTESE] Estado, partida ou dados de jogo pelo diretório/extensão; não confirmado. |
 | `Games/elif2002.dat` | [FATO] 2.340 bytes. SHA-256 `63E3163824ECD1CE091E2ABF7FBC4CC150B7D2FA037ACAE849F0F4C53102429C`. | [FATO] Idêntico byte a byte a `Provisory Teams/elif2002.dat`. [HIPÓTESE] Arquivo de dados compartilhado/copiado entre esses contextos; conteúdo não decodificado. |
 | `Provisory Teams/elif2002.dat` | [FATO] 2.340 bytes; mesmo SHA-256 de `Games/elif2002.dat`. | [HIPÓTESE] Dados usados por equipes provisórias, inferido somente pelo caminho. |
