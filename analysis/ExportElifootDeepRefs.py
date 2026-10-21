@@ -134,14 +134,35 @@ def reference_row(target_label, target_address, reference):
     ]
 
 
-def get_script_directory():
+def find_analysis_directory(start_directory):
+    directory = start_directory
+    while directory is not None:
+        candidate = File(directory, "analysis")
+        if candidate.isDirectory():
+            return candidate
+        directory = directory.getParentFile()
+    return None
+
+
+def get_analysis_directory():
+    candidates = []
     try:
         source_file = getSourceFile()
         if source_file is not None:
-            return source_file.getParentFile()
+            candidates.append(source_file.getParentFile())
     except:
         pass
-    return File(currentProgram.getExecutablePath()).getParentFile()
+
+    executable_path = currentProgram.getExecutablePath()
+    if executable_path:
+        candidates.append(File(executable_path).getParentFile())
+
+    for candidate in candidates:
+        analysis_directory = find_analysis_directory(candidate)
+        if analysis_directory is not None:
+            return analysis_directory
+
+    raise Exception("Could not locate the project analysis/ directory; refusing to export beside the executable.")
 
 
 def add_form_reference(rows, seen, form_name, kind, target_address, reference):
@@ -158,8 +179,8 @@ def add_form_reference(rows, seen, form_name, kind, target_address, reference):
 if currentProgram is None:
     raise Exception("Open the analyzed Elifoot 2002 program before running this script.")
 
-script_directory = get_script_directory()
-output_directory = File(script_directory, "ghidra_exports")
+analysis_directory = get_analysis_directory()
+output_directory = File(analysis_directory, "ghidra_exports")
 if not output_directory.exists() and not output_directory.mkdirs():
     raise Exception("Could not create output directory: " + output_directory.getAbsolutePath())
 
